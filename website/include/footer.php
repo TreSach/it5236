@@ -1,4 +1,4 @@
-<p class="footer">Copyright &copy; <?php echo date("Y"); ?> Russell Thackston</p>
+<div class="footer fcov" align="center">Copyright &copy; <?php echo date("Y"); ?> Sachel Purvis<br>Template provided by Russell Thackston</p>
 <?php
 
 if ($_COOKIE['debug'] == "true") {
@@ -9,5 +9,5 @@ if ($_COOKIE['debug'] == "true") {
 	}
 	echo "</pre>";
 }
-	
+
 ?>

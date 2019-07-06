@@ -18,27 +18,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 	// Get the topic id from the URL
 	$thingid = $_GET['thingid'];
-	
+
 	// Attempt to obtain the topic
 	$thing = $app->getThing($thingid, $errors);
-	
+
 	// If there were no errors getting the topic, try to get the comments
 	if (sizeof($errors) == 0) {
-	
+
 		// Attempt to obtain the comments for this topic
 		$thing = $app->getThing($thingid, $errors);
-		
+
 		// If the thing loaded successfully, load the associated comments
 		if (isset($thing)) {
 			$comments = $app->getComments($thing['thingid'], $errors);
 		}
-	
+
 	} else {
 		// Redirect the user to the things page on error
 		header("Location: list.php?error=nothing");
 		exit();
 	}
-	
+
 	// Check for url flag indicating that a new comment was created.
 	if (isset($_GET["newcomment"]) && $_GET["newcomment"] == "success") {
 		$message = "New comment successfully created.";
@@ -81,43 +81,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>russellthackston.me</title>
-	<meta name="description" content="Russell Thackston's personal website for IT 5233">
-	<meta name="author" content="Russell Thackston">
+	<title>Photofolio</title>
+	<meta name="description" content="Photofolio Spectacular">
+	<meta name="author" content="Sachel Purvis">
+	<link rel="icon" href="include/img/favicon.png" type="image/x-icon" />
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Cantora+One|Russo+One" rel="stylesheet">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 	<?php include 'include/header.php'; ?>
+	<div class="bodywrap">
 	<div class="breadcrumbs">
-		<a href="list.php">Back to things list</a>
+		<a href="list.php"><i class="fas fa-long-arrow-alt-left"></i>Back to things list</a>
 	</div>
-	
+
 	<?php include('include/messages.php'); ?>
-	
-	<div class="topiccontainer">
+
+	<div class="thisthing">
+		<div class="cocom">
 		<p class="topictitle"><?php echo $thing['thingname']; ?></p>
-		<p class="topictagline"><?php echo $thing['username']; ?> on <?php echo $thing['thingcreated']; ?></p>
+		<p class="topictagline"><?php echo $thing['username']; ?><br><?php echo $thing['thingcreated']; ?></p>
 		<?php if ($thing['filename'] != NULL) { ?>
-			<p class="topicattachment"><a href="attachments/<?php echo $thing['thingattachmentid'] . '-' . $thing['filename']; ?>"><?php echo $thing['filename']; ?></a></p>
+			<p class="topicattachment">Linked Attachment: <a href="attachments/<?php echo $thing['thingattachmentid'] . '-' . $thing['filename']; ?>"><?php echo $thing['filename']; ?></a></p>
 		<?php } else { ?>
 			<p class="topicattachment">No attachment</p>
 		<?php } ?>
 	</div>
-	<ul class="comments">
+	</div>
+	<div class="thicomments">
 		<?php foreach ($comments as $comment) { ?>
-		<li>
-			<?php echo $comment['commenttext']; ?>
+		<div class="itemcom">
+			<span class="comtext"><?php echo $comment['commenttext']; ?></span>
 			<br/>
-			<span class="author"><?php echo $comment['username']; ?> on <?php echo $comment['commentposted']; ?></span>
+			<span class="author comtext"><?php echo $comment['username']; ?> on <?php echo $comment['commentposted']; ?></span>
 			<?php if ($comment['filename'] != NULL) { ?>
-				<p class="commentattachment"><a href="attachments/<?php echo $comment['attachmentid'] . '-' . $comment['filename']; ?>"><?php echo $comment['filename']; ?></a></p>
+				<p class="commentattachment comtext">Linked Attachment: <a href="attachments/<?php echo $comment['attachmentid'] . '-' . $comment['filename']; ?>"><?php echo $comment['filename']; ?></a></p>
 			<?php } else { ?>
-				<p class="commentattachment">No attachment</p>
+				<p class="commentattachment comtext">No attachment</p>
 			<?php } ?>
-		</li>
+		</div>
 		<?php } ?>
-	</ul>
+	</div>
 	<div class="newcomment">
 		<form enctype="multipart/form-data" method="post" action="thing.php">
 			<textarea name="comment" id="comment" rows="4" cols="50" placeholder="Add a comment"></textarea>
@@ -129,6 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			<input type="submit" name="start" value="Add comment" />
 		</form>
 	</div>
+</div>
 	<?php include 'include/footer.php'; ?>
 	<script src="js/site.js"></script>
 </body>

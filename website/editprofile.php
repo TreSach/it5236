@@ -35,12 +35,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	} else {
 
 		$userid = $_GET['userid'];
-		
+
 	}
-	
+
 	// Attempt to obtain the user information.
 	$user = $app->getUser($userid, $errors);
-	
+
 	if ($user != NULL){
 		$username = $user['username'];
 		$email = $user['email'];
@@ -48,10 +48,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		$password = "";
 	}
 
-// If someone is attempting to edit their profile, process the request	
+// If someone is attempting to edit their profile, process the request
 } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-	// Get the form values 
+	// Get the form values
 	$userid   = $_POST['userid'];
 	$username = $_POST['username'];
 	$email    = $_POST['email'];
@@ -64,13 +64,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 	// Attempt to update the user information.
 	$result = $app->updateUser($userid, $username, $email, $password, $isadminFlag, $errors);
-	
+
 	// Display message upon success.
 	if ($result == TRUE){
 		$message = "User successfully updated.";
 		$user = $app->getUser($userid, $errors);
 	}
-		
+
 }
 
 ?>
@@ -79,19 +79,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>russellthackston.me</title>
-	<meta name="description" content="Russell Thackston's personal website for IT 5233">
-	<meta name="author" content="Russell Thackston">
+	<title>Photofolio</title>
+	<meta name="description" content="Photofolio Spectacular">
+	<meta name="author" content="Sachel Purvis">
+	<link rel="icon" href="include/img/favicon.png" type="image/x-icon" />
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Cantora+One|Russo+One" rel="stylesheet">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 	<?php include 'include/header.php'; ?>
-
+<div class="bodywrap">
 	<h2>Edit Profile</h2>
-	
-	<?php include 'include/messages.php'; ?>	
-	
+
+	<?php include 'include/messages.php'; ?>
+
 	<div>
 		<form action="editprofile.php" method="post">
 			<input type="hidden" name="userid" value="<?php echo $userid; ?>" />
@@ -109,6 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 			<input type="submit" value="Update profile" />
 		</form>
 	</div>
+</div>
 	<?php include 'include/footer.php'; ?>
 	<script src="js/site.js"></script>
 </body>

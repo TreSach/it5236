@@ -1,5 +1,5 @@
 <?php
-	
+
 // Import the application classes
 require_once('include/classes.php');
 
@@ -22,12 +22,12 @@ $users = $app->getUsers($errors);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	if ($_POST['attachmenttype'] == "add") {
-		
+
 		$name = $_POST['name'];;
 		$extension = $_POST['extension'];;
-	
+
 		$attachmenttypeid = $app->newAttachmentType($name, $extension, $errors);
-		
+
 		if ($attachmenttypeid != NULL) {
 			$messages[] = "New attachment type added";
 		}
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 // Attempt to obtain the list of users
-$attachmentTypes = $app->getAttachmentTypes($errors);
+$types = $app->getAttachmentTypes($errors);
 
 ?>
 
@@ -45,14 +45,18 @@ $attachmentTypes = $app->getAttachmentTypes($errors);
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>russellthackston.me</title>
-	<meta name="description" content="Russell Thackston's personal website for IT 5233">
-	<meta name="author" content="Russell Thackston">
+	<title>Photofolio</title>
+	<meta name="description" content="Photofolio Spectacular">
+	<meta name="author" content="Sachel Purvis">
+	<link rel="icon" href="include/img/favicon.png" type="image/x-icon" />
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Cantora+One|Russo+One" rel="stylesheet">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 	<?php include 'include/header.php'; ?>
+	<div class="bodywrap">
 	<h2>Admin Functions</h2>
 	<?php include 'include/messages.php'; ?>
 	<h3>User List</h3>
@@ -63,10 +67,10 @@ $attachmentTypes = $app->getAttachmentTypes($errors);
 	</ul>
 	<h3>Valid Attachment Types</h3>
 	<ul class="attachmenttypes">
-		<?php foreach($attachmentTypes as $attachmentType) { ?>
+		<?php foreach($types as $attachmentType) { ?>
 			<li><?php echo $attachmentType['name']; ?> [<?php echo $attachmentType['extension']; ?>]</li>
 		<?php } ?>
-		<?php if (sizeof($attachmentTypes) == 0) { ?>
+		<?php if (sizeof($types) == 0) { ?>
 			<li>No attachment types found in the database</li>
 		<?php } ?>
 	</ul>
@@ -83,6 +87,7 @@ $attachmentTypes = $app->getAttachmentTypes($errors);
 			<input type="submit" name="addattachmenttype" value="Add type" />
 		</form>
 	</div>
+</div>
 	<?php include 'include/footer.php'; ?>
 	<script src="js/site.js"></script>
 </body>

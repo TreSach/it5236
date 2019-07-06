@@ -18,7 +18,7 @@ $errors = array();
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 	if (isset($_GET['id'])) {
-		
+
 		$success = $app->processEmailValidation($_GET['id'], $errors);
 		if ($success) {
 			$message = "Email address validated. You may login.";
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if ($result == TRUE) {
 
 		// Redirect the user to the topics page on success
-		header("Location: list.php");
+		header("Location: login-otp.php");
 		exit();
 
 	}
@@ -53,44 +53,53 @@ if (isset($_GET['register']) && $_GET['register']== 'success') {
 	$message = "Registration successful. Please check your email. A message has been sent to validate your address.";
 }
 
+
+
 ?>
 
 <!doctype html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>russellthackston.me</title>
-	<meta name="description" content="Russell Thackston's personal website for IT 5233">
-	<meta name="author" content="Russell Thackston">
+	<title>Photofolio</title>
+	<meta name="description" content="Photofolio Spectacular">
+	<meta name="author" content="Sachel Purvis">
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="icon" href="include/img/favicon.png" type="image/x-icon" />
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Cantora+One|Russo+One" rel="stylesheet">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<!--1. Display Errors if any exists 
+<!--1. Display Errors if any exists
 	2. Display Login form (sticky):  Username and Password -->
 
 <body>
 	<?php include 'include/header.php'; ?>
-
+<div class="bodywrap">
 	<h2>Login</h2>
 
 	<?php include('include/messages.php'); ?>
-	
+
 	<div>
-		<form method="post" action="login.php">
-			
+		<form name="loginf" id="loginf" method="post" action="login.php">
+
 			<input type="text" name="username" id="username" placeholder="Username" value="<?php echo $username; ?>" />
 			<br/>
 
 			<input type="password" name="password" id="password" placeholder="Password" value="<?php echo $password; ?>" />
 			<br/>
 
-			<input type="submit" value="Login" name="login" />
+			<input type="checkbox" name="check" id="check" /> Remember my username
+			<br/>
+
+			<input type="submit" id="login" value="Login" name="login" />
 		</form>
 	</div>
 	<a href="register.php">Need to create an account?</a>
 	<br/>
 	<a href="reset.php">Forgot your password?</a>
+</div>
 	<?php include 'include/footer.php'; ?>
 	<script src="js/site.js"></script>
 </body>
